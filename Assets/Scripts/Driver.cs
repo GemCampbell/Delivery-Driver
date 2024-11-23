@@ -24,4 +24,16 @@ public class Driver : MonoBehaviour
 
         transform.Translate(0, moveAmount, 0);
     }
+
+
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        print("I have hit a: " + other.gameObject.tag);
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        print("I have run over a: " + other.gameObject.tag);
+    }
 }
