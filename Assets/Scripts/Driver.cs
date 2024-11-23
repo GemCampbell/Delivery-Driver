@@ -2,16 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using TMPro;
 
 public class Driver : MonoBehaviour
 {
     public float moveSpeed;
     public float turnSpeed;
+
+    public bool hasPackage;
+    public float destroyDelay;
+
+    public int playerScore;
+    public int scoreAmount;
+
+    public TextMeshProUGUI scoreText;
     
     
     void Start()
     {
-        
+        hasPackage = false;
+        playerScore = 0;
+        UpdateScoreText();
     }
 
     
@@ -26,14 +37,27 @@ public class Driver : MonoBehaviour
     }
 
 
-    void OnCollisionEnter2D(Collision2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        print("I have hit a: " + other.gameObject.tag);
+        if (other.gameObject.tag == "Package" && hasPackage == false)
+        {
+            hasPackage = true;
+            Destroy(other.gameObject, destroyDelay);
+        }
+
+        
+        if (other.gameObject.tag == "Customer" && hasPackage == true)
+        {
+            playerScore += scoreAmount;
+            UpdateScoreText();
+
+            hasPackage = false;
+        }
     }
 
 
-    void OnTriggerEnter2D(Collider2D other)
+    void UpdateScoreText()
     {
-        print("I have run over a: " + other.gameObject.tag);
+        scoreText.text = "Score: " + playerScore.ToString();
     }
 }
