@@ -32,7 +32,7 @@ public class Driver : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         print("I have run over a: " + other.gameObject.tag);
     }
